@@ -7,6 +7,6 @@ Packman
 
 Packman is HasGeek's experimental asset library management tool.
 
-This boilerplate uses Compass for custom stylesheets. Stylesheets are located
-in `packman/static/sass` and may be rebuilt with `compass compile`. To rebuild
-automatically, use `compass watch`.
+This app uses Compass for custom stylesheets. Stylesheets are located
+in `packman/static/sass` and may be rebuilt with `compass compile` from
+the base folder. To rebuild automatically, use `compass watch`.

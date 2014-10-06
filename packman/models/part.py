@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from . import db, TimestampMixin, NodeMixin, Node
-from .interface import ConnectionInterface
+from .interface import ConnectionInterface, interface_coupling_table
 
 __all__ = ['PartInterface', 'Part', 'PartInstance']
 
@@ -22,20 +22,26 @@ class Part(NodeMixin, Node):
     part_interfaces = db.relationship(PartInterface, cascade='all, delete-orphan', backref='part')
     #: TODO: Other metadata such as price
 
-    def compatible_with(self, part):
+    def is_compatible_with(self, part):
         """
         Do we have an interface that is coupled with one of the interfaces on the other part?
         """
         if isinstance(part, Part):
-            # TODO: Delegate this to the database with an SQL join query
-            local_interfaces = [pi.interface for pi in self.part_interfaces]
-            remote_interfaces = [pi.interface for pi in part.part_interfaces]
-
-            for li in local_interfaces:
-                for ri in remote_interfaces:
-                    if li in ri.couples:
-                        return True
-        return False
+            local_interfaces = [pi.interface.id for pi in self.part_interfaces]
+            remote_interfaces = [pi.interface.id for pi in part.part_interfaces]
+            return bool(
+                db.session.query(interface_coupling_table).filter(
+                    db.or_(
+                        db.and_(
+                            interface_coupling_table.c.lhs_interface_id.in_(local_interfaces),
+                            interface_coupling_table.c.rhs_interface_id.in_(remote_interfaces)
+                        ), db.and_(
+                            interface_coupling_table.c.lhs_interface_id.in_(remote_interfaces),
+                            interface_coupling_table.c.rhs_interface_id.in_(local_interfaces)
+                        ))
+                    ).count())
+        else:
+            return False
 
 
 class PartInstance(NodeMixin, Node):

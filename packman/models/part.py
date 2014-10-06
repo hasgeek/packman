@@ -28,4 +28,4 @@ class PartInstance(NodeMixin, Node):
     part = db.relationship(Part, foreign_keys=[part_id], backref=db.backref('instances', cascade='all, delete-orphan'))
     #: Description of this particular instance (health notes, acquisition story, etc)
     description = db.Column(db.UnicodeText)
-    # TODO: Include columns here to describe acquisition date, etc
+    # TODO: Include columns here to describe acquisition date, owner, possessor, etc

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from sqlalchemy.ext.associationproxy import association_proxy
 from . import db, TimestampMixin, NodeMixin, Node
 from .interface import ConnectionInterface, interface_coupling_table
 
@@ -20,6 +21,7 @@ class Part(NodeMixin, Node):
     #: Description of the item
     description = db.Column(db.UnicodeText)
     part_interfaces = db.relationship(PartInterface, cascade='all, delete-orphan', backref='part')
+    interfaces = association_proxy('part_interfaces', 'interface', creator=lambda i: PartInterface(interface=i))
     #: TODO: Other metadata such as price
 
     def is_compatible_with(self, part):
@@ -27,8 +29,22 @@ class Part(NodeMixin, Node):
         Do we have an interface that is coupled with one of the interfaces on the other part?
         """
         if isinstance(part, Part):
-            local_interfaces = [pi.interface.id for pi in self.part_interfaces]
-            remote_interfaces = [pi.interface.id for pi in part.part_interfaces]
+
+            # Version 1: local comparison
+            # Easy to comprehend, but inefficient because of the loops
+
+            # for li in self.interfaces:
+            #     for ri in part.interfaces:
+            #         if li in ri.couples:
+            #             return True
+            # return False
+
+            # Version 2: in-database comparison
+            # Provides lesser clarity but offloads heavy lifting to the database
+
+            local_interfaces = [i.id for i in self.interfaces]
+            remote_interfaces = [i.id for i in part.interfaces]
+
             return bool(
                 db.session.query(interface_coupling_table).filter(
                     db.or_(
@@ -40,8 +56,7 @@ class Part(NodeMixin, Node):
                             interface_coupling_table.c.rhs_interface_id.in_(local_interfaces)
                         ))
                     ).count())
-        else:
-            return False
+        return False
 
 
 class PartInstance(NodeMixin, Node):

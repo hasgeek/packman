@@ -26,6 +26,7 @@ class CategoryHelper(object):
         usb2.interfaces.append(self.ih.root.nodes['usb3-type-a-male'])
         usb2.interfaces.append(self.ih.root.nodes['usb3-type-b-male'])
 
+        db.session.commit()
         return 5  # Number of categories created above
 
 
@@ -40,8 +41,11 @@ class TestCategory(TestDatabaseFixture):
 
     def test_categories_have_interfaces(self):
         self.helper.make_categories()
+        cables = self.helper.root.nodes['cables']
+        usb = cables.nodes['usb']
+        typeb2 = usb.nodes['typeb2']
         self.assertEqual(
-            set(self.helper.root.nodes['cables'].nodes['usb'].nodes['typeb2'].interfaces),
+            set(typeb2.interfaces),
             set([self.helper.ih.root.nodes['usb2-type-a-male'], self.helper.ih.root.nodes['usb2-type-b-male']]))
 
     # TODO: Test adding parts to categories: they should acquire interfaces automatically

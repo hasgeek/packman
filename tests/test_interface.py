@@ -20,6 +20,7 @@ class InterfaceHelper(object):
         ConnectionInterface(name='usb3-type-b-male',   title=u"USB 3.0 Type B (male)",   gender=GENDER.MALE,   parent=self.root)
         ConnectionInterface(name='usb3-type-b-female', title=u"USB 3.0 Type B (female)", gender=GENDER.FEMALE, parent=self.root)
 
+        db.session.commit()
         return 8  # Count of interfaces we created above
 
     def make_usb_couples(self):
@@ -36,6 +37,7 @@ class InterfaceHelper(object):
         nodes['usb3-type-b-female'].couple_with(nodes['usb2-type-b-male'])
         nodes['usb3-type-b-female'].couple_with(nodes['usb3-type-b-male'])
 
+        db.session.commit()
         return 7  # Count of couples we created above
 
     def make_usb_couples_reverse(self):

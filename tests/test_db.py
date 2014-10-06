@@ -1,14 +1,10 @@
 # -*- coding: utf-8 -*-
 
-import os
 import unittest
 from coaster.utils import buid
 from packman import init_for, app, db, models
 
-init_for('test')
-app.config['SQLALCHEMY_ECHO'] = False
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
-    'SQLALCHEMY_DATABASE_URI', 'postgresql://postgres@localhost/myapp_test')
+init_for('testing')
 
 
 class TestDatabaseFixture(unittest.TestCase):

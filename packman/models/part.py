@@ -45,17 +45,16 @@ class Part(NodeMixin, Node):
             local_interfaces = [i.id for i in self.interfaces]
             remote_interfaces = [i.id for i in part.interfaces]
 
-            return bool(
-                db.session.query(interface_coupling_table).filter(
-                    db.or_(
-                        db.and_(
-                            interface_coupling_table.c.lhs_interface_id.in_(local_interfaces),
-                            interface_coupling_table.c.rhs_interface_id.in_(remote_interfaces)
-                        ), db.and_(
-                            interface_coupling_table.c.lhs_interface_id.in_(remote_interfaces),
-                            interface_coupling_table.c.rhs_interface_id.in_(local_interfaces)
-                        ))
-                    ).count())
+            return db.session.query(interface_coupling_table).filter(
+                db.or_(
+                    db.and_(
+                        interface_coupling_table.c.lhs_interface_id.in_(local_interfaces),
+                        interface_coupling_table.c.rhs_interface_id.in_(remote_interfaces)),
+                    db.and_(
+                        interface_coupling_table.c.lhs_interface_id.in_(remote_interfaces),
+                        interface_coupling_table.c.rhs_interface_id.in_(local_interfaces))
+                    )
+                ).first() is not None
         return False
 
 

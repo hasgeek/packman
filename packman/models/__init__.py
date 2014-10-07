@@ -4,6 +4,7 @@ from coaster.sqlalchemy import IdMixin, TimestampMixin, BaseMixin, BaseNameMixin
 from nodular import db, NodeMixin, Node
 
 from .user import *
+from .profile import *
 from .interface import *
 from .part import *
 from .bundle import *

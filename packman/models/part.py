@@ -22,6 +22,7 @@ class Part(NodeMixin, Node):
     description = db.Column(db.UnicodeText)
     part_interfaces = db.relationship(PartInterface, cascade='all, delete-orphan', backref='part')
     interfaces = association_proxy('part_interfaces', 'interface', creator=lambda i: PartInterface(interface=i))
+    fungible = db.Column(db.Boolean, nullable=False, default=False)
     #: TODO: Other metadata such as price
 
     def is_compatible_with(self, part):
@@ -64,4 +65,11 @@ class PartInstance(NodeMixin, Node):
     part = db.relationship(Part, foreign_keys=[part_id], backref=db.backref('instances', cascade='all, delete-orphan'))
     #: Description of this particular instance (health notes, acquisition story, etc)
     description = db.Column(db.UnicodeText)
+    #: For fungible parts, how many do we have?
+    count = db.Column(db.Integer, nullable=False, default=1)
     # TODO: Include columns here to describe acquisition date, owner, possessor, etc
+
+    def __init__(self, **kwargs):
+        super(PartInstance, self).__init__(**kwargs)
+        if self.part and not self.title:
+            self.title = self.part.title

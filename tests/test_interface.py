@@ -10,15 +10,15 @@ class InterfaceHelper(object):
         db.session.add(self.root)
 
     def make_usb_interfaces(self):
-        ConnectionInterface(name='usb2-type-a-male',   title=u"USB 2.0 Type A (male)",   gender=GENDER.MALE,   parent=self.root)
-        ConnectionInterface(name='usb2-type-a-female', title=u"USB 2.0 Type A (female)", gender=GENDER.FEMALE, parent=self.root)
-        ConnectionInterface(name='usb2-type-b-male',   title=u"USB 2.0 Type B (male)",   gender=GENDER.MALE,   parent=self.root)
-        ConnectionInterface(name='usb2-type-b-female', title=u"USB 2.0 Type B (female)", gender=GENDER.FEMALE, parent=self.root)
+        ConnectionInterface(name=u'usb2-type-a-male',   title=u"USB 2.0 Type A (male)",   gender=GENDER.MALE,   parent=self.root)
+        ConnectionInterface(name=u'usb2-type-a-female', title=u"USB 2.0 Type A (female)", gender=GENDER.FEMALE, parent=self.root)
+        ConnectionInterface(name=u'usb2-type-b-male',   title=u"USB 2.0 Type B (male)",   gender=GENDER.MALE,   parent=self.root)
+        ConnectionInterface(name=u'usb2-type-b-female', title=u"USB 2.0 Type B (female)", gender=GENDER.FEMALE, parent=self.root)
 
-        ConnectionInterface(name='usb3-type-a-male',   title=u"USB 3.0 Type A (male)",   gender=GENDER.MALE,   parent=self.root)
-        ConnectionInterface(name='usb3-type-a-female', title=u"USB 3.0 Type A (female)", gender=GENDER.FEMALE, parent=self.root)
-        ConnectionInterface(name='usb3-type-b-male',   title=u"USB 3.0 Type B (male)",   gender=GENDER.MALE,   parent=self.root)
-        ConnectionInterface(name='usb3-type-b-female', title=u"USB 3.0 Type B (female)", gender=GENDER.FEMALE, parent=self.root)
+        ConnectionInterface(name=u'usb3-type-a-male',   title=u"USB 3.0 Type A (male)",   gender=GENDER.MALE,   parent=self.root)
+        ConnectionInterface(name=u'usb3-type-a-female', title=u"USB 3.0 Type A (female)", gender=GENDER.FEMALE, parent=self.root)
+        ConnectionInterface(name=u'usb3-type-b-male',   title=u"USB 3.0 Type B (male)",   gender=GENDER.MALE,   parent=self.root)
+        ConnectionInterface(name=u'usb3-type-b-female', title=u"USB 3.0 Type B (female)", gender=GENDER.FEMALE, parent=self.root)
 
         db.session.commit()
         return 8  # Count of interfaces we created above

@@ -73,3 +73,5 @@ class PartInstance(NodeMixin, Node):
         super(PartInstance, self).__init__(**kwargs)
         if self.part and not self.title:
             self.title = self.part.title
+        if not self.name:
+            self.make_name()

@@ -4,12 +4,12 @@ from packman.models import db, Node, Part
 from .test_db import TestDatabaseFixture
 from .test_interface import InterfaceHelper
 
-class PartHelper:
+class PartHelper(object):
     def __init__(self):
         self.ih = InterfaceHelper()
         self.ih.make_usb_interfaces()
         self.ih.make_usb_couples()
-        self.root = Node(name=u'parts',title=u'Parts',itype=u'parts')
+        self.root = Node(name=u'parts', title=u'Parts', itype=u'parts')
         db.session.add(self.root)
 
     def make_parts(self):
@@ -28,7 +28,12 @@ class PartHelper:
         laptop = Part(name=u'laptop', title=u"Laptop", parent=self.root)
         laptop.interfaces.append(self.ih.root.nodes['usb3-type-a-female'])
 
-        return 4 # Number of parts created
+        ram_4gb = Part(name=u'ram-4gb', title=u"4GB DDR3 SO-DIMM", parent=self.root)
+        power_adapter = Part(name=u'power-adapter', title=u"65W Power Adapter", parent=self.root)
+        keyboard = Part(name=u'keyboard', title=u"Bluetooth keyboard", parent=self.root)
+        mouse = Part(name=u'mouse', title=u"Bluetooth Mouse", parent=self.root)
+
+        return 8 # Number of parts created
 
 
 class TestPart(TestDatabaseFixture):

@@ -52,7 +52,7 @@ class Bundle(NodeMixin, Node):
 
         # Recurse through the node tree looking for part instances and count the parts referred to
         def get_part_counts(node):
-            for item in node.nodes:
+            for item in node.nodes.values():
                 if isinstance(item, PartInstance):
                     partcounts[item.part] += 1
                 get_part_counts(item)  # Recurse through sub-nodes looking for part instances

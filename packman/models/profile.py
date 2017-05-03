@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from flask.ext.lastuser.sqlalchemy import ProfileMixin
+from flask_lastuser.sqlalchemy import ProfileMixin
 from . import NodeMixin, Node
 
 __all__ = ['Profile']

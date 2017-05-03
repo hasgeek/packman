@@ -15,12 +15,12 @@ class BundleHelper(object):
         db.session.add(self.root)
 
     def make_bundle(self):
-        #create two bundles - programmer_kit and computer box
+        # Create two bundles - programmer_kit and computer box
         programmer_kit = Bundle(name=u'programmer-kit', title=u"HasGeek Programmer Kit L-1", parent=self.root)
         Bundle(name=u'computer-box', title=u"Macbook Pro Carton", parent=programmer_kit)
-        
+
     def make_part_instance(self):
-        #add part instances to bundles
+        # Add part instances to bundles
         computer_box = self.root.nodes['programmer-kit'].nodes['computer-box']
         laptop = PartInstance(part=self.ph.root.nodes['laptop'], parent=computer_box)
         PartInstance(part=self.ph.root.nodes['power-adapter'], parent=computer_box)
@@ -66,7 +66,7 @@ class TestBundle(TestDatabaseFixture):
             'power-adapter': 1,
             'keyboard': 1,
             'mouse': 1,
-            'usb3' : 1,
+            'usb3': 1,
             }
         PartInstance(name=u'hispeedusb', part=self.helper.ph.root.nodes['usb3'], parent=nodes['programmer-kit'])
         self.assertEqual(programmer_kit_l3, dict([(sp.part.name, sp.count) for sp in nodes['programmer-kit'].make_spec().specparts]))

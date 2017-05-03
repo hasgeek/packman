@@ -17,7 +17,7 @@ category_interface_table = db.Table('category_interface', db.Model.metadata,
 category_part_table = db.Table('category_part', db.Model.metadata,
     *(make_timestamp_columns() + (
         db.Column('category_id', None, db.ForeignKey('category.id'), primary_key=True),
-        db.Column('partt_id', None, db.ForeignKey('part.id'), primary_key=True)
+        db.Column('part_id', None, db.ForeignKey('part.id'), primary_key=True)
         )))
 
 

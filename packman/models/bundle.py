@@ -41,7 +41,7 @@ class Bundle(NodeMixin, Node):
         Convert this bundle into a spec.
         """
         # Do we have a bundlespec? If not, make a new one.
-        if self.bundlespec and not self.bundlespec.frozen and replace == False:
+        if self.bundlespec and not self.bundlespec.frozen and replace is False:
             bundlespec = self.bundlespec
         else:
             bundlespec = Bundlespec(title=self.title, parent=self.parent)

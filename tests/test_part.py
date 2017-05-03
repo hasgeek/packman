@@ -4,6 +4,7 @@ from packman.models import db, Node, Part
 from .test_db import TestDatabaseFixture
 from .test_interface import InterfaceHelper
 
+
 class PartHelper(object):
     def __init__(self):
         self.ih = InterfaceHelper()
@@ -13,7 +14,7 @@ class PartHelper(object):
         db.session.add(self.root)
 
     def make_parts(self):
-         # add 4 parts usb2 cable, usb3 cable, computer, phone with interfaces
+        # add 4 parts usb2 cable, usb3 cable, computer, phone with interfaces
         usb2 = Part(name=u'usb2', title=u"USB 2.0 cable", parent=self.root)
         usb2.interfaces.append(self.ih.root.nodes['usb2-type-a-male'])
         usb2.interfaces.append(self.ih.root.nodes['usb2-type-b-male'])
@@ -28,12 +29,14 @@ class PartHelper(object):
         laptop = Part(name=u'laptop', title=u"Laptop", parent=self.root)
         laptop.interfaces.append(self.ih.root.nodes['usb3-type-a-female'])
 
-        ram_4gb = Part(name=u'ram-4gb', title=u"4GB DDR3 SO-DIMM", parent=self.root)
-        power_adapter = Part(name=u'power-adapter', title=u"65W Power Adapter", parent=self.root)
-        keyboard = Part(name=u'keyboard', title=u"Bluetooth keyboard", parent=self.root)
-        mouse = Part(name=u'mouse', title=u"Bluetooth Mouse", parent=self.root)
+        # Instantiating a part linked to a parent is enough to get this
+        # added to the database session due to SQLAlchemy cascades.
+        Part(name=u'ram-4gb', title=u"4GB DDR3 SO-DIMM", parent=self.root)
+        Part(name=u'power-adapter', title=u"65W Power Adapter", parent=self.root)
+        Part(name=u'keyboard', title=u"Bluetooth keyboard", parent=self.root)
+        Part(name=u'mouse', title=u"Bluetooth Mouse", parent=self.root)
 
-        return 8 # Number of parts created
+        return 8  # Number of parts created
 
 
 class TestPart(TestDatabaseFixture):

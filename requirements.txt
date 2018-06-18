@@ -1,7 +1,7 @@
-Flask
-Flask-SQLAlchemy
-Flask-Script==0.5.3
-Flask-RQ
+Flask==1.0.2
+Flask-SQLAlchemy==2.3.2
+Flask-Script==2.0.6
+Flask-RQ==0.2
 https://github.com/hasgeek/coaster/archive/master.zip
 https://github.com/hasgeek/baseframe/archive/master.zip
 https://github.com/hasgeek/flask-lastuser/archive/master.zip
